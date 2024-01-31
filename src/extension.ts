@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import * as fs from 'fs';
+import { GradeFastHomePanel } from './panels/gradefast-home-panel';
 
 let commentID = 1; 
 
@@ -23,7 +25,35 @@ class NoteComment implements vscode.Comment {
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {	
+/**
+ * 
+ * @param context 
+ * @todo change the extension to activate when extension webview is opened.
+ */
+export function activate(context: vscode.ExtensionContext) {
+	// context.subscriptions.push(vscode.commands.registerCommand('gradefast.testOpenFolder', () => {
+	// 	const testFolder = './tests/';
+	// 	fs.readdirSync(testFolder).forEach(file => {
+			
+	// 	})
+	// }))
+	// function gradefastWorkspace(folderPath) {
+	// 	if (typeof folderPath == 'undefined') {
+	// 		return;
+	// 	}
+	// 	if (!fs.existsSync(folderPath)) {
+	// 		return;
+	// 	}
+
+	// 	let folderUri = vscode.Uri.file(folderPath);
+
+	// 	vscode.commands.executeCommand('vscode.open');
+	// }
+	const startGradingCommand = vscode.commands.registerCommand("gradefast.startGrading", () => {
+		GradeFastHomePanel.render(context.extensionUri);
+	});
+
+	context.subscriptions.push(startGradingCommand);
 	// provides comments for the document with CommentController
 	const commentController = vscode.comments.createCommentController('comment-sample', 'Comment API Sample');
 	context.subscriptions.push(commentController);

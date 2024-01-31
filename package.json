@@ -14,95 +14,97 @@
   "contributes": {
     "commands": [
       {
+        "command": "gradefast.startGrading",
+        "category": "GradeFast",
+        "title": "Start Grading"
+      },
+      {
         "command": "gradefast.createComment",
         "category": "GradeFast",
-        "title": "Create Comment", 
+        "title": "Create Comment",
         "enablement": "!commentIsEmpty"
-      }, 
+      },
       {
         "command": "gradefast.editComment",
         "category": "GradeFast",
-        "title": "Edit Comment", 
+        "title": "Edit Comment",
         "icon": {
           "dark": "resources/edit_inverse.svg",
           "light": "resources/edit.svg"
         }
-      }, 
+      },
       {
         "command": "gradefast.deleteComment",
         "category": "GradeFast",
-        "title": "Delete Comment", 
+        "title": "Delete Comment",
         "icon": {
           "dark": "resources/close_inverse.svg",
           "light": "resources/close.svg"
         }
       },
-			{
-				"command": "gradefast.saveNote",
-				"title": "Save"
-			},
-			{
-				"command": "gradefast.cancelsaveNote",
-				"title": "Cancel"
-			},
-			{
-				"command": "gradefast.dispose",
-				"title": "Remove All Notes"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "gradefast.createComment",
-					"when": "false"
-				},
-				{
-					"command": "gradefast.deleteComment",
-					"when": "false"
-				}
-				
-			],
-			"comments/commentThread/title": [
-				
-			],
-			"comments/commentThread/context": [
-				{
-					"command": "gradefast.createComment",
-					"group": "inline",
-					"when": "commentController == comment-sample && commentThreadIsEmpty"
-				}
-			],
-			"comments/comment/title": [
-				{
-					"command": "gradefast.editComment",
-					"group": "group@1",
-					"when": "commentController == comment-sample"
-				},
-				{
-					"command": "gradefast.deleteComment",
-					"group": "group@2",
-					"when": "commentController == comment-sample"
-				}
-			],
-			"comments/comment/context": [
-				{
-					"command": "gradefast.cancelsaveNote",
-					"group": "inline@1",
-					"when": "commentController == comment-sample"
-				},
-				{
-					"command": "gradefast.saveNote",
-					"group": "inline@2",
-					"when": "commentController == comment-sample"
-				}
-			]
-		}
-	},
+      {
+        "command": "gradefast.saveNote",
+        "title": "Save"
+      },
+      {
+        "command": "gradefast.cancelsaveNote",
+        "title": "Cancel"
+      },
+      {
+        "command": "gradefast.dispose",
+        "title": "Remove All Notes"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "gradefast.createComment",
+          "when": "false"
+        },
+        {
+          "command": "gradefast.deleteComment",
+          "when": "false"
+        }
+      ],
+      "comments/commentThread/title": [],
+      "comments/commentThread/context": [
+        {
+          "command": "gradefast.createComment",
+          "group": "inline",
+          "when": "commentController == comment-sample && commentThreadIsEmpty"
+        }
+      ],
+      "comments/comment/title": [
+        {
+          "command": "gradefast.editComment",
+          "group": "group@1",
+          "when": "commentController == comment-sample"
+        },
+        {
+          "command": "gradefast.deleteComment",
+          "group": "group@2",
+          "when": "commentController == comment-sample"
+        }
+      ],
+      "comments/comment/context": [
+        {
+          "command": "gradefast.cancelsaveNote",
+          "group": "inline@1",
+          "when": "commentController == comment-sample"
+        },
+        {
+          "command": "gradefast.saveNote",
+          "group": "inline@2",
+          "when": "commentController == comment-sample"
+        }
+      ]
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile": "node ./esbuild.js",
+    "watch": "node ./esbuild.js --watch",
+    "package": "NODE_ENV=production node ./esbuild.js",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
@@ -110,18 +112,23 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.84.0",
     "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
+    "@types/vscode": "^1.84.0",
+    "@types/vscode-webview": "^1.57.5",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "esbuild": "^0.16.17",
     "eslint": "^8.52.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
-    "typescript": "^5.2.2",
     "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "@vscode/test-electron": "^2.3.6"
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@vscode/webview-ui-toolkit": "^1.4.0"
   }
 }
